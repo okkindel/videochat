@@ -15,6 +15,6 @@
     "start": "parcel serve ./src/index.html",
     "build": "parcel build ./src/index.html"
   },
-  "author": "Adrian Mucha & Maciej Hajduk",
+  "author": "Adrian Mucha & Maciej Hajduk & Maciej Dziadyk",
   "license": "ISC"
 }
