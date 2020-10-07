@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.ts",
   "dependencies": {
-    "@livechat/customer-sdk": "^2.0.3",
+    "peerjs": "^1.3.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
   "devDependencies": {
+    "@types/react": "^16.9.51",
     "parcel": "^2.0.0-beta.1"
   },
   "scripts": {

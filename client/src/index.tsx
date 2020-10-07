@@ -1,12 +1,15 @@
 import React from "react";
 import { render } from "react-dom";
+import useWebRTC from "./hooks/useWebRTC";
 
-import CustomerSDK from './CustomerSDK';
-
-try {
-    console.log({ CustomerSDK })
-} catch (error) {
-    console.error(error);
+function App() {
+  const state = useWebRTC();
+  return (
+    <>
+      <h1>Hello Worlddddd</h1>
+      <pre>{JSON.stringify(state, null, 2)}</pre>
+    </>
+  );
 }
 
-render(<h1>Hello Worlddddd</h1>, document.getElementById("root"));
+render(<App />, document.getElementById("root"));
