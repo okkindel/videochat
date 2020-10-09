@@ -20,7 +20,21 @@ function getStream() {
   return navigator.mediaDevices.getUserMedia({ video: true, audio: false });
 }
 
-export default function useWebRTC(targetId: string): HookReturn {
+function attachStreamToVideo(stream: MediaStream) {
+  const video = document.createElement("video");
+  video.src = "urlToVideo.ogg";
+  video.autoplay = true;
+  video.style.border = "1px solid black";
+  document.body.appendChild(video);
+
+  try {
+    video.srcObject = stream;
+  } catch (error) {
+    video.src = window.URL.createObjectURL(stream);
+  }
+}
+
+export default function useWebRTC(): HookReturn {
   const [state, setState] = useState<
     Pick<HookReturn, "id" | "loading" | "error">
   >({
@@ -41,7 +55,14 @@ export default function useWebRTC(targetId: string): HookReturn {
   );
 
   const connectTo = useCallback(
-    (destId: string) => getStream().then((stream) => peer.call(destId, stream)),
+    (destId: string) =>
+      getStream().then((stream) => {
+        const call = peer.call(destId, stream);
+        call.on("stream", (remoteStream) => {
+          attachStreamToVideo(remoteStream);
+        });
+        return call;
+      }),
     []
   );
 
@@ -59,18 +80,11 @@ export default function useWebRTC(targetId: string): HookReturn {
     peer.on("call", async (call: Peer.MediaConnection) => {
       console.log("call", call);
       const stream = await getStream();
-      const video = document.getElementById(targetId) as HTMLVideoElement;
-
-      video.style.border = "1px solid black";
 
       call.answer(stream);
 
       call.on("stream", (remoteStream) => {
-        try {
-          video.srcObject = stream;
-        } catch (error) {
-          video.src = window.URL.createObjectURL(stream);
-        }
+        attachStreamToVideo(remoteStream);
         console.log("onStream", remoteStream);
       });
     });

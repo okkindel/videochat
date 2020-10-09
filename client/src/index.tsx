@@ -12,7 +12,7 @@ function Error({ error }: { error: Record<string, unknown> }) {
 
 function App() {
   const [targetId, setTargetId] = useState("");
-  const { id, loading, error, connectTo } = useWebRTC("vid");
+  const { id, loading, error, connectTo } = useWebRTC();
 
   if (loading) {
     return <Loading />;
