@@ -34,7 +34,7 @@ function attachStreamToVideo(stream: MediaStream) {
   }
 }
 
-export default function useWebRTC(): HookReturn {
+export default function useWebRTC(roomId: string): HookReturn {
   const [state, setState] = useState<
     Pick<HookReturn, "id" | "loading" | "error">
   >({
@@ -46,13 +46,19 @@ export default function useWebRTC(): HookReturn {
 
   const peer = useMemo(
     () =>
-      new Peer({
+      new Peer(roomId, {
         config: {
           iceServers: [{ urls: STUN_URLS }],
         },
+        // host: 'aee009d0b914.ngrok.io',
+        // port: 9001,
+        // path: '/myapp',
+        // secure: true
       }),
     []
   );
+
+  console.log(peer);
 
   const connectTo = useCallback(
     (destId: string) =>

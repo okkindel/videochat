@@ -10,9 +10,14 @@ function Error({ error }: { error: Record<string, unknown> }) {
   return <pre>{JSON.stringify(error, null, 2)}</pre>;
 }
 
+function getRoomId(){
+  return document.getElementsByTagName('meta').item(1).getAttribute("data-roomid");
+}
+
 function App() {
   const [targetId, setTargetId] = useState("");
-  const { id, loading, error, connectTo } = useWebRTC();
+  const roomId = getRoomId();
+  const { id, loading, error, connectTo } = useWebRTC(roomId);
 
   if (loading) {
     return <Loading />;
