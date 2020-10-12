@@ -50,10 +50,10 @@ export default function useWebRTC(roomId: string): HookReturn {
         config: {
           iceServers: [{ urls: STUN_URLS }],
         },
-        // host: 'aee009d0b914.ngrok.io',
-        // port: 9001,
-        // path: '/myapp',
-        // secure: true
+        host: 'textless.ml',
+        port: 9001,
+        path: '/myapp',
+        secure: true,
       }),
     []
   );

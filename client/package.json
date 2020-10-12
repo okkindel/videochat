@@ -17,7 +17,8 @@
   ],
   "scripts": {
     "start": "parcel serve ./src/index.html",
-    "build": "parcel build ./src/index.html --no-scope-hoist"
+    "build": "parcel build ./src/index.html --no-scope-hoist && npm run build:mv",
+    "build:mv": "mv client.*.js ../backend/public/source2.js"
   },
   "author": "Adrian Mucha & Maciej Hajduk & Maciej Dziadyk",
   "license": "ISC"

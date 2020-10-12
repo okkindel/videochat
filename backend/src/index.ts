@@ -1,13 +1,19 @@
 import express from 'express';
-import http from 'http';
+import https from 'https';
 import socketIO from 'socket.io';
 import {v4} from 'uuid';
+import fs from 'fs';
 
+const key = fs.readFileSync(__dirname + '/../certs/selfsigned.key');
+const cert = fs.readFileSync(__dirname + '/../certs/selfsigned.crt');
+const options = {
+  key,
+  cert
+};
 
 const app = express();
-const server = new http.Server(app);
+const server = https.createServer(options, app);
 const io = socketIO(server);
-
 
 
 app.set('view engine', 'ejs');

@@ -4,11 +4,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const http_1 = __importDefault(require("http"));
+const https_1 = __importDefault(require("https"));
 const socket_io_1 = __importDefault(require("socket.io"));
 const uuid_1 = require("uuid");
+const fs_1 = __importDefault(require("fs"));
+const key = fs_1.default.readFileSync(__dirname + '/../certs/selfsigned.key');
+const cert = fs_1.default.readFileSync(__dirname + '/../certs/selfsigned.crt');
+const options = {
+    key,
+    cert
+};
 const app = express_1.default();
-const server = new http_1.default.Server(app);
+const server = https_1.default.createServer(options, app);
 const io = socket_io_1.default(server);
 app.set('view engine', 'ejs');
 app.use(express_1.default.static('public'));
