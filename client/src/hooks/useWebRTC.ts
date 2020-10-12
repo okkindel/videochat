@@ -10,23 +10,33 @@ const STUN_URLS = [
 ];
 
 type HookReturn = {
-  error?: Record<string, unknown>;
+  error?: string;
   id: string;
   loading: boolean;
   connectTo: (id: string) => Promise<Peer.MediaConnection>;
 };
 
 function getStream() {
-  return navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+  return navigator.mediaDevices.getUserMedia({ video: true, audio: true });
 }
 
-function attachStreamToVideo(stream: MediaStream) {
+function getOrCreateVideoWithID(id: string): HTMLVideoElement {
+  const found = document.getElementById(id) as HTMLVideoElement;
+  if (found) {
+    return found;
+  }
+
   const video = document.createElement("video");
-  video.src = "urlToVideo.ogg";
+  video.id = id;
   video.autoplay = true;
   video.style.border = "1px solid black";
   document.body.appendChild(video);
 
+  return video;
+}
+
+function attachStreamToVideo(stream: MediaStream) {
+  const video = getOrCreateVideoWithID(stream.id);
   try {
     video.srcObject = stream;
   } catch (error) {
@@ -50,9 +60,9 @@ export default function useWebRTC(roomId: string): HookReturn {
         config: {
           iceServers: [{ urls: STUN_URLS }],
         },
-        host: 'textless.ml',
+        host: "textless.ml",
         port: 9001,
-        path: '/myapp',
+        path: "/myapp",
         secure: true,
       }),
     []
