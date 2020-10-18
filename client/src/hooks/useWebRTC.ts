@@ -30,13 +30,21 @@ function getOrCreateVideoWithID(id: string): HTMLVideoElement {
   video.id = id;
   video.autoplay = true;
   video.style.border = "1px solid black";
+  video.style.position = "fixed";
+  video.style.top = "0";
+  video.style.bottom = "0";
+  video.style.left = "0";
+  video.style.right = "0";
+  video.style.width = "100%";
+  video.style.overflow = "auto"
+  video.style.zIndex = "1";
   document.body.appendChild(video);
 
   return video;
 }
 
 function attachStreamToVideo(stream: MediaStream) {
-  const video = getOrCreateVideoWithID(stream.id);
+  const video = getOrCreateVideoWithID('caller');
   try {
     video.srcObject = stream;
   } catch (error) {
