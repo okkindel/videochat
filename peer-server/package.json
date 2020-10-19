@@ -1,0 +1,11 @@
+{
+    "name": "videochat_peerserver",
+    "author": "Adrian Mucha & Maciej Hajduk & Maciej Dziadyk",
+    "scripts": {
+        "start": "node ./server.js"
+    },
+    "dependencies": {
+        "express": "^4.17.1",
+        "peer": "^0.5.3"
+    }
+}
