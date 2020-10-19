@@ -1,5 +1,5 @@
-import Peer from "peerjs";
 import { useState, useEffect, useMemo, useCallback } from "react";
+import Peer from "peerjs";
 
 const STUN_URLS = [
   "stun:stun.l.google.com:19302",
@@ -68,9 +68,9 @@ export default function useWebRTC(roomId: string): HookReturn {
         config: {
           iceServers: [{ urls: STUN_URLS }],
         },
-        host: "textless.ml",
-        port: 9001,
-        path: "/myapp",
+        host: "localhost",
+        port: 5000,
+        path: "/textless",
         secure: true,
       }),
     []
