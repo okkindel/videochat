@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react';
 import { BsClipboard } from 'react-icons/bs';
 import useWebRTC from './hooks/useWebRTC';
 import styled from 'styled-components';
+import copy from 'copy-to-clipboard';
 import { render } from 'react-dom';
 import * as React from 'react';
 import {
@@ -51,9 +52,11 @@ function CreateInvitationLink(props): JSX.Element {
     const url = `https://textless.ml/?myID=&targetID=${props.id}`;
     if (props.id) {
         return (
-            <ToastedButton>
-                <BsClipboard /> Copy Invitation Link
-            </ToastedButton>
+            <Invitation onClick={() => copy(url)}>
+                <ToastedButton>
+                    <BsClipboard /> Copy Invitation Link
+                </ToastedButton>
+            </Invitation>
         );
     }
 }
@@ -109,8 +112,6 @@ function App() {
                                 size='large'
                                 label='Waiting for an incoming call...'
                             />
-                            <br />
-                            <br />
                             <CreateInvitationLink id={id} />
                         </Content>
                     )}
@@ -175,6 +176,10 @@ const Video = styled.video<{ isVisible: boolean }>`
     right: 16px;
     bottom: 6px;
     z-index: 2;
+`;
+
+const Invitation = styled.div`
+    margin-top: 2rem;
 `;
 
 render(<App />, document.getElementById('root'));
