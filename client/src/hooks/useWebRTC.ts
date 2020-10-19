@@ -72,7 +72,7 @@ export default function useWebRTC(
           iceServers: [{ urls: STUN_URLS }],
         },
         host: "textless.ml",
-        port: 9443,
+        port: 5000,
         path: "/textless",
         secure: true,
       }),
