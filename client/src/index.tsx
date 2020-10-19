@@ -27,12 +27,15 @@ function App() {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const showMyCamera = useCallback(() => {
     setIsVisible(true);
+
     const video = document.getElementById("yours") as HTMLVideoElement;
+
     navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
       console.log(video, "ustawiam stram");
       video.srcObject = stream;
     });
   }, [setIsVisible]);
+
   const { id, loading, error, connectTo } = useWebRTC(myID, showMyCamera);
 
   if (loading) {
