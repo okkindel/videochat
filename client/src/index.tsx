@@ -74,7 +74,7 @@ function App() {
     const [isVisible, setIsVisible] = useState<boolean>(false);
     const showMyCamera = useCallback(() => {
         setIsVisible(true);
-        const video = document.getElementById('yours') as HTMLVideoElement;
+        const video = document.getElementById('receiver') as HTMLVideoElement;
         navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
             console.log(video, 'ustawiam stram');
             video.srcObject = stream;
@@ -116,10 +116,19 @@ function App() {
                         </Content>
                     )}
 
-                    <Video isVisible={isVisible} autoPlay id='yours'></Video>
-                    {error && <Error error={error} />}
+                    <CallerVideo
+                        isVisible={isVisible}
+                        autoPlay
+                        id='caller'
+                    ></CallerVideo>
+                    <ReceiverVideo
+                        isVisible={isVisible}
+                        autoPlay
+                        id='receiver'
+                    ></ReceiverVideo>
                 </Tank>
             </NotificationProvider>
+            {error && <Error error={error} />}
         </Container>
     );
 }
@@ -168,14 +177,25 @@ const Content = styled.div`
     top 50%;
 `;
 
-const Video = styled.video<{ isVisible: boolean }>`
+const ReceiverVideo = styled.video<{ isVisible: boolean }>`
     display: ${(props) => (props.isVisible ? 'block' : 'none')};
     position: absolute;
     height: 250px;
     width: 250px;
     right: 16px;
     bottom: 6px;
-    z-index: 2;
+    z-index: 5;
+`;
+
+const CallerVideo = styled.video<{ isVisible: boolean }>`
+    display: ${(props) => (props.isVisible ? 'block' : 'none')};
+    transform: translate(-50%, -50%);
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    z-index: 3;
+    left: 50%;
+    top 50%;
 `;
 
 const Invitation = styled.div`
