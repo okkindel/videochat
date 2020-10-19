@@ -1,11 +1,16 @@
 version: '3'
 
 services:
-  client:
-    build: ./client
-    ports:
-      - "3000:3000"
+
   peer:
     build: ./peer-server
     ports:
       - "5000:5000"
+    stdin_open: true
+
+
+  client:
+    build: ./client
+    ports:
+      - "3000:3000"
+    stdin_open: true

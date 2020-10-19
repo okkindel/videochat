@@ -68,7 +68,7 @@ export default function useWebRTC(roomId: string): HookReturn {
         config: {
           iceServers: [{ urls: STUN_URLS }],
         },
-        host: "localhost",
+        host: "textless.ml",
         port: 5000,
         path: "/textless",
         secure: true,
