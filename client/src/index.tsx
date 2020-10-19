@@ -1,5 +1,5 @@
 import useWebRTC from "./hooks/useWebRTC";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import styled from "styled-components";
 import { render } from "react-dom";
 
@@ -18,41 +18,41 @@ function getURLParams() {
   const url = new URL(window.location.href);
   const myID = url.searchParams.get("myID");
   const targetID = url.searchParams.get("targetID");
-  console.log('my', myID, 'target', targetID)
+  console.log("my", myID, "target", targetID);
   return [myID, targetID];
 }
 
 function App() {
   const [myID, targetID] = getURLParams();
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const { id, loading, error, connectTo } = useWebRTC(myID);
+  const showMyCamera = useCallback(() => {
+    setIsVisible(true);
+    const video = document.getElementById("yours") as HTMLVideoElement;
+    navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
+      console.log(video, "ustawiam stram");
+      video.srcObject = stream;
+    });
+  }, [setIsVisible]);
+  const { id, loading, error, connectTo } = useWebRTC(myID, showMyCamera);
 
   if (loading) {
     return <Loading />;
   }
 
   function connect() {
-    setIsVisible(true);
-    const video = document.getElementById('yours') as HTMLVideoElement;
-    navigator.mediaDevices.getUserMedia({video: true}).then((stream) => {
-      console.log(video, 'ustawiam stram')
-      video.srcObject = stream;
-    });
-    connectTo(targetID).catch(alert);
+    connectTo(targetID).then(showMyCamera).catch(alert);
   }
 
   return (
     <Container>
       <h1>Your peerId: {id}</h1>
       {targetID ? (
-        <button onClick={connect}>
-          Call {targetID}
-        </button>
+        <button onClick={connect}>Call {targetID}</button>
       ) : (
         <h2>Waiting for connection...</h2>
-        )}
-        
-      <Video isVisible={isVisible} autoPlay id='yours'></Video>
+      )}
+
+      <Video isVisible={isVisible} autoPlay id="yours"></Video>
       {error && <Error error={error} />}
     </Container>
   );
@@ -66,8 +66,8 @@ const Container = styled.div`
   margin: 32px;
 `;
 
-const Video = styled.video<{isVisible: boolean}>`
-  display: ${props => props.isVisible ? 'block' : 'none'};
+const Video = styled.video<{ isVisible: boolean }>`
+  display: ${(props) => (props.isVisible ? "block" : "none")};
   position: absolute;
   height: 250px;
   width: 250px;

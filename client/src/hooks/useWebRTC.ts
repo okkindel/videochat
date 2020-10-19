@@ -36,7 +36,7 @@ function getOrCreateVideoWithID(id: string): HTMLVideoElement {
   video.style.left = "0";
   video.style.right = "0";
   video.style.width = "100%";
-  video.style.overflow = "auto"
+  video.style.overflow = "auto";
   video.style.zIndex = "1";
   document.body.appendChild(video);
 
@@ -44,7 +44,7 @@ function getOrCreateVideoWithID(id: string): HTMLVideoElement {
 }
 
 function attachStreamToVideo(stream: MediaStream) {
-  const video = getOrCreateVideoWithID('caller');
+  const video = getOrCreateVideoWithID("caller");
   try {
     video.srcObject = stream;
   } catch (error) {
@@ -52,7 +52,10 @@ function attachStreamToVideo(stream: MediaStream) {
   }
 }
 
-export default function useWebRTC(roomId: string): HookReturn {
+export default function useWebRTC(
+  roomId: string,
+  onCall: () => void
+): HookReturn {
   const [state, setState] = useState<
     Pick<HookReturn, "id" | "loading" | "error">
   >({
@@ -105,6 +108,7 @@ export default function useWebRTC(roomId: string): HookReturn {
       console.log("call", call);
       const stream = await getStream();
 
+      onCall();
       call.answer(stream);
 
       call.on("stream", (remoteStream) => {
