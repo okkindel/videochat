@@ -31,5 +31,5 @@ const peerHttpsServer = new ExpressPeerServer(httpsServer,{
   }
 });
 
-httpServer.listen(9080);
-httpsServer.listen(9443);
+httpServer.listen(5001);
+httpsServer.listen(5000);
