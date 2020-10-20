@@ -1,8 +1,8 @@
 import { NotificationProvider, ToastConsumer } from '@livechat/design-system';
 import { Loading, Preparation, Video } from './components';
 import { useCallback, useState } from 'react';
-import { Container, Tank } from './styles';
 import useWebRTC from './hooks/useWebRTC';
+import { Container } from './styles';
 import { render } from 'react-dom';
 import * as React from 'react';
 
@@ -19,16 +19,16 @@ function getURLParams(): [string, string] {
 
 function App() {
     const [myID, targetID] = getURLParams();
-    const [isCallActive, setIsVisible] = useState<boolean>(false);
+    const [isCallActive, setIsCallActive] = useState<boolean>(false);
 
     const showMyCamera = useCallback(() => {
-        setIsVisible(true);
+        setIsCallActive(true);
         const video = document.getElementById('receiver') as HTMLVideoElement;
         navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
             console.log(video, 'ustawiam stram');
             video.srcObject = stream;
         });
-    }, [setIsVisible]);
+    }, [setIsCallActive]);
 
     const { id, loading, error, connectTo } = useWebRTC(myID, showMyCamera);
 
@@ -49,9 +49,7 @@ function App() {
                     fixed
                 />
                 {isCallActive ? (
-                    <Tank>
-                        <Video />
-                    </Tank>
+                    <Video />
                 ) : (
                     <Preparation
                         myID={id}
