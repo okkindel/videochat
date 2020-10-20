@@ -1,4 +1,22 @@
-import styled from "styled-components";
+import styled from 'styled-components';
+
+export const Container = styled.div`
+    background-image: linear-gradient(62deg, #fbab7e 0%, #f7ce68 100%);
+    background-color: #fbab7e;
+    position: relative;
+    height: 100vh;
+`;
+
+export const Content = styled.div`
+    transform: translate(-50%, -50%);
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    display: flex;
+    left: 50%;
+    flex: 1;
+    top 50%;
+`;
 
 export const Tank = styled.div`
     border-radius: 2% 6% 5% 4% / 1% 1% 2% 4%;
