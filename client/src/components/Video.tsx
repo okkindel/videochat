@@ -1,5 +1,6 @@
 import { AiOutlineFullscreen } from 'react-icons/ai';
 import { VscMute, VscUnmute } from 'react-icons/vsc';
+import { ImPhoneHangUp } from 'react-icons/im';
 import { useState } from 'react';
 import * as React from 'react';
 import {
@@ -10,7 +11,7 @@ import {
     VideoIcon
 } from '../styles';
 
-export function Video(): JSX.Element {
+export function Video(props): JSX.Element {
     const [isMuted, setIsMuted] = useState<boolean>(false);
 
     function setFullscreen(): void {
@@ -33,6 +34,9 @@ export function Video(): JSX.Element {
             <CallerVideo autoPlay id='caller'></CallerVideo>
             <ReceiverVideo autoPlay id='receiver'></ReceiverVideo>
             <VideoIcons>
+                <VideoIcon>
+                    <ImPhoneHangUp onClick={props.hangUp} />
+                </VideoIcon>
                 <VideoIcon>
                     {isMuted ? (
                         <VscUnmute onClick={muteVideo} />

@@ -2,7 +2,7 @@ import { ModalPortal, ModalBase } from '@livechat/design-system';
 import * as React from 'react';
 
 export function Error({ error }: { error: string }): JSX.Element {
-    return (
+    return error ? (
         <ModalPortal>
             {error && (
                 <ModalBase
@@ -13,5 +13,5 @@ export function Error({ error }: { error: string }): JSX.Element {
                 </ModalBase>
             )}
         </ModalPortal>
-    );
+    ) : null;
 }

@@ -5,6 +5,7 @@ import useWebRTC from './hooks/useWebRTC';
 import { Container } from './styles';
 import { render } from 'react-dom';
 import * as React from 'react';
+import Peer from 'peerjs';
 
 function getURLParams(): [string, string] {
     const url = new URL(window.location.href);
@@ -14,26 +15,44 @@ function getURLParams(): [string, string] {
 }
 
 function App() {
-    const [myID, targetID] = getURLParams();
+    const [userId, targetID] = getURLParams();
+    const [connection, setConnection] = useState<Peer.MediaConnection>(null);
     const [isCallActive, setIsCallActive] = useState<boolean>(false);
 
-    const showMyCamera = useCallback(() => {
-        setIsCallActive(true);
-        const video = document.getElementById('receiver') as HTMLVideoElement;
-        navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
-            console.log(video, 'ustawiam stram');
-            video.srcObject = stream;
-        });
-    }, [setIsCallActive]);
+    const createLocalStream = useCallback(
+        (call: Peer.MediaConnection) => {
+            setIsCallActive(true);
+            setConnection(call);
+            const video = document.getElementById(
+                'receiver'
+            ) as HTMLVideoElement;
+            navigator.mediaDevices
+                .getUserMedia({ video: true })
+                .then((stream) => {
+                    video.srcObject = stream;
+                });
+        },
+        [setIsCallActive]
+    );
 
-    const { id, loading, error, connectTo } = useWebRTC(myID, showMyCamera);
+    function hangUpConnection(): void {
+        connection.close();
+        peer.destroy();
+        setIsCallActive(false);
+    }
+
+    const { id, loading, error, peer, connectTo } = useWebRTC(
+        userId,
+        createLocalStream,
+        hangUpConnection
+    );
 
     if (loading) {
         return <Loading />;
     }
 
     function connect() {
-        connectTo(targetID).then(showMyCamera).catch(alert);
+        connectTo(targetID).then(createLocalStream).catch(alert);
     }
 
     return (
@@ -45,7 +64,7 @@ function App() {
                     fixed
                 />
                 {isCallActive ? (
-                    <Video />
+                    <Video hangUp={hangUpConnection} />
                 ) : (
                     <Preparation
                         myID={id}
