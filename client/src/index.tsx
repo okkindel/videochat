@@ -1,14 +1,10 @@
 import { NotificationProvider, ToastConsumer } from '@livechat/design-system';
-import { Loading, Preparation, Video } from './components';
+import { Loading, Preparation, Video, Error } from './components';
 import { useCallback, useState } from 'react';
 import useWebRTC from './hooks/useWebRTC';
 import { Container } from './styles';
 import { render } from 'react-dom';
 import * as React from 'react';
-
-function Error({ error }: { error: string }) {
-    return <pre>Error: {error.toString()}</pre>;
-}
 
 function getURLParams(): [string, string] {
     const url = new URL(window.location.href);
@@ -58,7 +54,7 @@ function App() {
                     />
                 )}
             </NotificationProvider>
-            {error && <Error error={error} />}
+            <Error error={error} />
         </Container>
     );
 }

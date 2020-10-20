@@ -7,7 +7,7 @@ export const ButtonWithToast = ({ notificationSystem, children }) => {
             type: 'toast',
             autoHideDelayTime: 3000,
             payload: {
-                variant: 'success',
+                variant: 'notification',
                 content: 'Link copied to clipboard!',
                 horizontalPosition: 'center',
                 verticalPosition: 'top',

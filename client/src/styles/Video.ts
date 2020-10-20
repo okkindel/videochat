@@ -15,33 +15,37 @@ export const ReceiverVideo = styled.video`
     height: 250px;
     width: 250px;
     z-index: 5;
-    left: 2rem;
-    top: 0;
+    right: 2%;
+    top: 1%;
 `;
 
 export const VideoTagContainer = styled.div`
-    transform: translate(-50%, -50%);
     position: relative;
     background: black;
-    height: 70vh;
-    width: 70vw;
-    left: 50%;
-    top 50%;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    left: 0;
+    top 0;
 `;
 
 export const VideoIcons = styled.div`
+    background: linear-gradient(transparent, black);
+    align-items: center;
     position: absolute;
-    font-size: 1.5rem;
-    display: flex;
-    height: 2rem;
-    color: white;
+    display: block;
+    height: 4rem;
     z-index: 10;
+    width 100%;
     bottom: 0;
     right: 0;
 `;
 
 export const VideoIcon = styled.div`
-    margin: 0 0.35rem;
+    margin: 0 0.5rem;
+    margin-top: 0.3rem;
+    font-size: 3rem;
+    float: right;
     color: white;
     &:hover {
         opacity: 50%;
