@@ -88,6 +88,10 @@ export default function useWebRTC(
                 call.on('stream', (remoteStream) => {
                     attachStreamToVideo(remoteStream);
                 });
+                call.on('close', () => {
+                    console.log('call close');
+                    dispatchOnClose();
+                })
                 return call;
             }),
         []
@@ -124,6 +128,7 @@ export default function useWebRTC(
 
             call.on('close', () => {
                 console.log('call close');
+                dispatchOnClose();
             })
         });
 
