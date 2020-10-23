@@ -103,6 +103,12 @@ export default function useWebRTC(
         });
 
         peer.on('close', () => {
+            console.log('peer close');
+            dispatchOnClose();
+        });
+
+        peer.on('disconnected', () => {
+            console.log('peer disconnected');
             dispatchOnClose();
         });
 
@@ -115,6 +121,10 @@ export default function useWebRTC(
             call.on('stream', (remoteStream) => {
                 attachStreamToVideo(remoteStream);
             });
+
+            call.on('close', () => {
+                console.log('call close');
+            })
         });
 
         return () => {

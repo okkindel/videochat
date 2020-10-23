@@ -38,6 +38,7 @@ function App() {
     function hangUpConnection(): void {
         connection.close();
         peer.destroy();
+        setConnection(null);
         setIsCallActive(false);
     }
 
