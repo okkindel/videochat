@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const CallerVideo = styled.video`
     transform: translate(-50%, -50%);
-    position: absolute;
+    position: relative;
     height: 100%;
     width: 100%;
     z-index: 3;
@@ -30,24 +30,51 @@ export const VideoTagContainer = styled.div`
 `;
 
 export const VideoIcons = styled.div`
-    background: linear-gradient(transparent, black);
-    align-items: center;
+    justify-content: center;
     position: absolute;
-    display: block;
+    color: transparent;
+    background: none;
+    transition: 0.3s;
+    display: flex;
     height: 4rem;
     z-index: 10;
     width 100%;
-    bottom: 0;
-    right: 0;
+    bottom 0;
+
+    &:hover {
+        background: white;
+        color: #5f6368;
+        display: flex;
+    }
 `;
 
 export const VideoIcon = styled.div`
-    margin: 0 0.5rem;
-    margin-top: 0.3rem;
-    font-size: 3rem;
-    float: right;
-    color: white;
+    transform: translate(0.2rem,0.55rem);
+    margin: 0 2rem;
+    margin-top: 0.7rem;
+    font-size: 1.7rem;
+    
     &:hover {
         opacity: 50%;
     }
+`;
+
+export const MainIcon = styled.div`
+    transform: translate(0.2rem, 0.55rem);
+    font-size: 1.7rem;
+    margin: 0 0.5rem;
+    &:hover {
+        opacity: 50%;
+    }
+`;
+
+export const MainIconContainer = styled.div`
+    box-shadow: 0 0 7px #999;
+    margin-left: 0.2rem;
+    border-radius: 50%;
+    margin-top: 0.5rem;
+    background: white;
+    color: #c5221f;
+    height: 3rem;
+    width: 3rem;
 `;

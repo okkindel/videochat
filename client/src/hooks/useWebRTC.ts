@@ -89,7 +89,6 @@ export default function useWebRTC(
                     attachStreamToVideo(remoteStream);
                 });
                 call.on('close', () => {
-                    console.log('call close');
                     dispatchOnClose();
                 })
                 return call;
@@ -106,16 +105,6 @@ export default function useWebRTC(
             setState({ ...state, loading: false, error: err.message });
         });
 
-        peer.on('close', () => {
-            console.log('peer close');
-            dispatchOnClose();
-        });
-
-        peer.on('disconnected', () => {
-            console.log('peer disconnected');
-            dispatchOnClose();
-        });
-
         peer.on('call', async (call: Peer.MediaConnection) => {
             const stream = await getStream();
 
@@ -127,7 +116,6 @@ export default function useWebRTC(
             });
 
             call.on('close', () => {
-                console.log('call close');
                 dispatchOnClose();
             })
         });

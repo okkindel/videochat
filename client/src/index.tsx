@@ -5,6 +5,7 @@ import useWebRTC from './hooks/useWebRTC';
 import { Container } from './styles';
 import { render } from 'react-dom';
 import * as React from 'react';
+import Peer from 'peerjs';
 
 function getURLParams(): [string, string] {
     const url = new URL(window.location.href);

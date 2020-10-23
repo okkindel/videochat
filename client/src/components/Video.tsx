@@ -5,10 +5,12 @@ import { useState } from 'react';
 import * as React from 'react';
 import {
     VideoTagContainer,
+    MainIconContainer,
     ReceiverVideo,
     CallerVideo,
     VideoIcons,
-    VideoIcon
+    VideoIcon,
+    MainIcon
 } from '../styles';
 
 export function Video(props): JSX.Element {
@@ -35,15 +37,17 @@ export function Video(props): JSX.Element {
             <ReceiverVideo autoPlay id='receiver'></ReceiverVideo>
             <VideoIcons>
                 <VideoIcon>
-                    <ImPhoneHangUp onClick={props.hangUp} />
-                </VideoIcon>
-                <VideoIcon>
                     {isMuted ? (
                         <VscUnmute onClick={muteVideo} />
                     ) : (
                         <VscMute onClick={muteVideo} />
                     )}
                 </VideoIcon>
+                <MainIconContainer>
+                    <MainIcon>
+                        <ImPhoneHangUp onClick={props.hangUp} />
+                    </MainIcon>
+                </MainIconContainer>
                 <VideoIcon>
                     <AiOutlineFullscreen onClick={setFullscreen} />
                 </VideoIcon>
