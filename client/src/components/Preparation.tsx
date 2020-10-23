@@ -7,8 +7,8 @@ import * as React from 'react';
 
 function CreateInvitationLink(props): JSX.Element {
     const ToastedButton = notificationConnect(ButtonWithToast);
-    // const url = `https://textless.ml/?myID=&targetID=${props.id}`;
-    const url = `localhost:3000/?myID=&targetID=${props.id}`;
+    const url = `https://textless.ml/?myID=&targetID=${props.id}`;
+    // const url = `localhost:3000/?myID=&targetID=${props.id}`;
     if (props.id) {
         return (
             <Invitation onClick={() => copy(url)}>
