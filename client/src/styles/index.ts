@@ -1,4 +1,4 @@
 export * from './Containers';
-export * from './Buttons';
+export * from './Shared';
 export * from './Video';
 

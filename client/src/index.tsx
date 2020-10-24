@@ -1,11 +1,16 @@
 import { NotificationProvider, ToastConsumer } from '@livechat/design-system';
-import { Loading, Preparation, Video, Error } from './components';
+import { Loading, Preparation, Video, Error, Closing } from './components';
 import { useCallback, useState } from 'react';
 import useWebRTC from './hooks/useWebRTC';
 import { Container } from './styles';
 import { render } from 'react-dom';
 import * as React from 'react';
-import Peer from 'peerjs';
+
+enum AppState {
+    READY,
+    ACTIVE,
+    GONE
+}
 
 function getURLParams(): [string, string] {
     const url = new URL(window.location.href);
@@ -16,19 +21,23 @@ function getURLParams(): [string, string] {
 
 function App() {
     const [userId, targetID] = getURLParams();
-    const [isCallActive, setIsCallActive] = useState<boolean>(false);
+    const [appState, setAppState] = useState<AppState>(AppState.READY);
 
     const createLocalStream = useCallback(() => {
-        setIsCallActive(true);
+        setAppState(AppState.ACTIVE);
         const video = document.getElementById('receiver') as HTMLVideoElement;
         navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
             video.srcObject = stream;
         });
-    }, [setIsCallActive]);
+    }, [setAppState]);
 
     function hangUpConnection(): void {
         peer.destroy();
-        setIsCallActive(false);
+        setAppState(AppState.GONE);
+    }
+
+    function isAppState(state: AppState): boolean {
+        return appState === state;
     }
 
     const { id, loading, error, peer, connectTo } = useWebRTC(
@@ -53,14 +62,16 @@ function App() {
                     verticalPosition='top'
                     fixed
                 />
-                {isCallActive ? (
-                    <Video hangUp={hangUpConnection} />
-                ) : (
+                {isAppState(AppState.READY) ? (
                     <Preparation
                         myID={id}
                         targetID={targetID}
                         connect={connect}
                     />
+                ) : isAppState(AppState.ACTIVE) ? (
+                    <Video hangUp={hangUpConnection} />
+                ) : (
+                    <Closing />
                 )}
             </NotificationProvider>
             <Error error={error} />

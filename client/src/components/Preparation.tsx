@@ -1,5 +1,5 @@
 import { Button, Loader, notificationConnect } from '@livechat/design-system';
-import { Content, Invitation, Tank } from '../styles';
+import { Content, Header, SpacerContainer, Tank } from '../styles';
 import { ButtonWithToast } from './ToastButton';
 import { BsClipboard } from 'react-icons/bs';
 import copy from 'copy-to-clipboard';
@@ -11,11 +11,14 @@ function CreateInvitationLink(props): JSX.Element {
     // const url = `localhost:3000/?myID=&targetID=${props.id}`;
     if (props.id) {
         return (
-            <Invitation onClick={() => copy(url)}>
-                <ToastedButton>
+            <ToastedButton>
+                <Button
+                    kind={props.hasTarget ? 'text' : undefined}
+                    onClick={() => copy(url)}
+                >
                     <BsClipboard /> Copy Invitation Link
-                </ToastedButton>
-            </Invitation>
+                </Button>
+            </ToastedButton>
         );
     }
 }
@@ -25,16 +28,26 @@ export function Preparation(props): JSX.Element {
         <Tank>
             <Content>
                 {props.targetID ? (
-                    <Button kind='primary' onClick={props.connect}>
-                        Call now to your partner
-                    </Button>
+                    <SpacerContainer>
+                        <Header>Your conversation is ready.</Header>
+                        <Button kind='primary' onClick={props.connect}>
+                            Call now to your partner
+                        </Button>
+                    </SpacerContainer>
                 ) : (
-                    <Loader
-                        size='large'
-                        label='Waiting for an incoming call...'
-                    />
+                    <SpacerContainer>
+                        <Loader
+                            size='large'
+                            label='Waiting for an incoming call...'
+                        />
+                    </SpacerContainer>
                 )}
-                <CreateInvitationLink id={props.myID} />
+                <SpacerContainer>
+                    <CreateInvitationLink
+                        id={props.myID}
+                        hasTarget={props.targetID}
+                    />
+                </SpacerContainer>
             </Content>
         </Tank>
     );

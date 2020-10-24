@@ -1,4 +1,3 @@
-import { Button } from '@livechat/design-system';
 import * as React from 'react';
 
 export const ButtonWithToast = ({ notificationSystem, children }) => {
@@ -16,5 +15,5 @@ export const ButtonWithToast = ({ notificationSystem, children }) => {
         };
         return notificationSystem.add(opts);
     };
-    return <Button onClick={createToast}>{children}</Button>;
+    return <div onClick={createToast}>{children}</div>;
 };
