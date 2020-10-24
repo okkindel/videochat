@@ -1,0 +1,15 @@
+{
+    "port": "6969",
+    "webhook_url": "https://textless.ml/api/webhook",
+    "webhook_secret": "pan_kabala69",
+    "image_url": "https://i.ibb.co/sqJm9sN/Obszar-roboczy-1-4x.png",
+    "call_url": "https://textless.ml/",
+    "oauth": {
+        "client_id": "e4a3f9be5de642953670ed29a8b2fb59",
+        "client_secret": "0b25a0bd3dc45e97575d22f75be262bd",
+        "redirect_uri": "https://textless.ml/api/setup"
+    },
+    "redis": {
+        "url": "redisdb:6379"
+    }
+}
